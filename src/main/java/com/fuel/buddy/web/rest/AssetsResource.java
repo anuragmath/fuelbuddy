@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.fuel.buddy.domain.Assets;
 
 import com.fuel.buddy.repository.AssetsRepository;
+import com.fuel.buddy.repository.UserRepository;
 import com.fuel.buddy.repository.search.AssetsSearchRepository;
 import com.fuel.buddy.web.rest.util.HeaderUtil;
 
@@ -33,12 +34,16 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class AssetsResource {
 
     private final Logger log = LoggerFactory.getLogger(AssetsResource.class);
-        
+
     @Inject
     private AssetsRepository assetsRepository;
 
     @Inject
     private AssetsSearchRepository assetsSearchRepository;
+
+
+    @Inject
+    private UserRepository userRepository;
 
     /**
      * POST  /assets : Create a new assets.
@@ -50,6 +55,8 @@ public class AssetsResource {
     @PostMapping("/assets")
     @Timed
     public ResponseEntity<Assets> createAssets(@Valid @RequestBody Assets assets) throws URISyntaxException {
+
+
         log.debug("REST request to save Assets : {}", assets);
         if (assets.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("assets", "idexists", "A new assets cannot already have an ID")).body(null);
@@ -134,7 +141,7 @@ public class AssetsResource {
      * SEARCH  /_search/assets?query=:query : search for the assets corresponding
      * to the query.
      *
-     * @param query the query of the assets search 
+     * @param query the query of the assets search
      * @return the result of the search
      */
     @GetMapping("/_search/assets")

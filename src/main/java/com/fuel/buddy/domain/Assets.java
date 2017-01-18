@@ -1,5 +1,6 @@
 package com.fuel.buddy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -44,8 +45,9 @@ public class Assets implements Serializable {
     @Column(name = "asset_identifier", nullable = false)
     private String assetIdentifier;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name ="")
+    @JoinColumn(name ="user_id", nullable = false)
     private User user;
 
     public Long getId() {
