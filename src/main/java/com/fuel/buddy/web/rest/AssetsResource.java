@@ -61,7 +61,10 @@ public class AssetsResource {
         if (assets.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("assets", "idexists", "A new assets cannot already have an ID")).body(null);
         }
+
+
         Assets result = assetsRepository.save(assets);
+
         assetsSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/assets/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("assets", result.getId().toString()))
