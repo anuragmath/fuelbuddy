@@ -22,5 +22,7 @@
 
     <cache alias="com.fuel.buddy.domain.Assets" uses-template="simple"/>
 
+    <cache alias="com.fuel.buddy.domain.Fuel" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>
