@@ -6,6 +6,7 @@ import com.fuel.buddy.domain.Assets;
 import com.fuel.buddy.repository.AssetsRepository;
 import com.fuel.buddy.repository.UserRepository;
 import com.fuel.buddy.repository.search.AssetsSearchRepository;
+import com.fuel.buddy.security.SecurityUtils;
 import com.fuel.buddy.web.rest.util.HeaderUtil;
 
 import org.slf4j.Logger;
@@ -62,7 +63,7 @@ public class AssetsResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("assets", "idexists", "A new assets cannot already have an ID")).body(null);
         }
 
-
+        assets.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
         Assets result = assetsRepository.save(assets);
 
         assetsSearchRepository.save(result);
